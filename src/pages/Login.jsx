@@ -6,13 +6,13 @@ const Login = ({ onLogin }) => {
   const [contrasena, setContrasena] = useState('');
   const [error, setError] = useState('');
 
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     try {
-      const res = await axios.post(`${API_URL}/login`, { nombre, contrasena }, { withCredentials: true });
+      const res = await axios.post(`${API_URL}/api/login`, { nombre, contrasena }, { withCredentials: true });
       localStorage.setItem('usuario', JSON.stringify(res.data.usuario));
       onLogin();
     } catch (err) {
