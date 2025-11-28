@@ -5,7 +5,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 console.log('API URL:', API_URL);
 
 const api = axios.create({
-  baseURL: API_URL,
+  baseURL: `${API_URL}/api`,
   withCredentials: true
 });
 
@@ -37,4 +37,15 @@ export const logout = async () => {
     credentials: 'include'
   });
   return response.json();
+};
+
+// --- PRODUCTOS ---
+export const getProductos = async () => {
+  try {
+    const response = await api.get('/productos');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching productos:', error);
+    throw error;
+  }
 };
