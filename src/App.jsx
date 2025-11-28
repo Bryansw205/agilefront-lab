@@ -8,7 +8,7 @@ import Clientes from './pages/Clientes';
 import Reportes from './pages/Reportes';
 import Login from './pages/Login';
 
-import api from './services/api';
+import api, { logout } from './services/api';
 
 const App = () => {
   const [usuario, setUsuario] = useState(() => {
@@ -41,6 +41,16 @@ const App = () => {
     setUsuario(u ? JSON.parse(u) : null);
   };
 
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+    }
+    localStorage.removeItem('usuario');
+    setUsuario(null);
+  };
+
   if (verificando) {
     return <div style={{textAlign:'center',marginTop:'20vh',fontSize:'1.3rem',color:'#888'}}>Verificando sesión...</div>;
   }
@@ -51,7 +61,7 @@ const App = () => {
 
   return (
     <Router>
-      <Navbar />
+      <Navbar onLogout={handleLogout} />
       <Routes>
         <Route path="/" element={<Navigate to="/ventas" />} />
         <Route path="/productos" element={<Productos />} />

@@ -58,22 +58,14 @@ const activeLinkStyle = {
 };
 
 
-const Navbar = () => {
+const Navbar = ({ onLogout }) => {
   const location = useLocation();
   const usuario = JSON.parse(localStorage.getItem('usuario'));
 
-  const handleLogout = async () => {
-    try {
-      await fetch('http://localhost:5000/api/logout', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' }
-      });
-    } catch (err) {
-      // Ignorar error, igual limpiar localStorage
+  const handleLogout = () => {
+    if (onLogout) {
+      onLogout();
     }
-    localStorage.removeItem('usuario');
-    window.location.reload();
   };
 
   return (
